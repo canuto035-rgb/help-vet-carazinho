@@ -29,6 +29,13 @@ jobs:
         run: |
           mkdir -p _site
           tar -xzf site.tar.gz -C _site
+          # O GitHub Pages já publica o artefato sob /help-vet-carazinho/.
+          # Os arquivos do build precisam ficar na raiz do artefato para que
+          # /help-vet-carazinho/_next/... encontre os estilos e scripts.
+          if [ -d _site/help-vet-carazinho/_next ]; then
+            mv _site/help-vet-carazinho/_next _site/_next
+            rmdir _site/help-vet-carazinho
+          fi
 
       - name: Configurar o GitHub Pages
         uses: actions/configure-pages@v5
